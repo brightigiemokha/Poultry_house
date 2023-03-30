@@ -25,13 +25,14 @@ while True:
     # to remove commas from the strings
     sales_data = data_str.split(",")
     if validate_data(sales_data):
+        print('valid Data')
         break
 
 def validate_data(values):
     # to raise valueError and conver all strings into integers if there aren't 5 values
     try:
         [int(value) for value in values]
-        if lent(values) != 4:
+        if len(values) != 4:
             raise ValueError(
                 f" Please check your input, only 4 value required, you have entered {len(values)}"
             )
@@ -39,6 +40,7 @@ def validate_data(values):
         print(f"Invald input: {e}, please try again.\n")
         #checking for error, if error then return false, otherwise return True
         return False
+        
     return True
 
-get_sales_data()
+data = get_sales_data()
