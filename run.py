@@ -59,7 +59,7 @@ def validate_data(values):
 
 
 def update_worksheet(data, worksheet):
-    """ 
+    """
     receiving a list of int to be insterted into a worksheet
     to update the relevant worksheet with the data provided
     """
@@ -80,7 +80,7 @@ def calculate_extras_data(sales_row):
     
     extras_data = []
     for balance, sales in zip(balance_row, sales_row):
-        extras = int(balance) - int(sales)
+        extras = int(balance) - sales
         extras_data.append(extras)
     
     return extras_data
@@ -93,7 +93,7 @@ def get_last_5_entries_sales():
     sales = SHEET.worksheet("sales")
     
     columns = []
-    for ind in range(1, 7):
+    for ind in range(1, 5):
         column = sales.col_values(ind)
         columns.append(column[-5:])
 
