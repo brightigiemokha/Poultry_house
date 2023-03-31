@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -40,7 +41,7 @@ def validate_data(values):
                 f" Please check your input, only 4 value required, you have entered {len(values)}"
             )
     except ValueError as e:
-        print(f"Invald input: {e}, please try again.\n")
+        print(f"Invald data: {e}, please try again.\n")
         #checking for error, if error then return false, otherwise return True
         return False
         
@@ -50,10 +51,29 @@ def update_sales_worksheet(data):
     """
     update sales worksheet, add new row with the list data provided.
     """
-    print("updating sales worksheet...\n")
+    print("Updating sales worksheet...\n")
     sales_worksheet = SHEET.worksheet("sales")
     sales_worksheet.append_row(data)
+    print("Sales worksheet updated.\n")
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+
+def calculate_extras_data(sales_row):
+    """
+    compare sales with stock and calculate the Extras for each item type.
+    """
+    print("Calculating Extras data...\n")
+    # to get all balance stock values
+    balance = SHEET.worksheet("balance").get_all_values()
+    pprint(balance)
+
+
+def man():
+    # Run all program functions
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_extras_data(sales_data)
+
+
+print("Welcome to Poultry House Date Automation")
+main()
