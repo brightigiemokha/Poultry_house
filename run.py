@@ -15,7 +15,7 @@ SHEET = GSPREAD_CLIENT.open('Poultry_house')
 
 
 
-def input_sales_data():
+def get_sales_data():
     """
     Get sales datas input for the poultry
     """
@@ -116,11 +116,13 @@ def calculate_stock_data(data):
 
 
 def main():
-    # Run all program functions
-    data = input_sales_data()
+    """
+     Run all program functions
+     """
+    data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_worksheet(sales_data, "sales")
-    new_balance_data = calculate_extras_data(sales_data)
+    new_extras_data = calculate_extras_data(sales_data)
     update_worksheet(new_extra_data, "extras")
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_columns)
