@@ -1,6 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
+
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -12,6 +12,31 @@ CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('Poultry_house')
+
+
+
+def input_sales_data():
+    """
+    Get sales datas input for the poultry
+    """
+
+    
+    while True:
+        print("Please enter sales data for the day.")
+        print("Data should be four numbers, separated by commas.")
+        print("Example: 05,35,45,25\n")
+        #convert the strings of data from the user into a list of value
+        data_str = input("Enter your data here:\n")
+
+        """
+        to remove commas from the strings
+        """
+        sales_data = data_str.split(",")
+        if validate_data(sales_data):
+            print("Valid Data!!!")
+            break
+
+    return sales_data
 
 def validate_data(values):
     """
@@ -42,31 +67,6 @@ def update_worksheet(data, worksheet):
     worksheet_updates = SHEET.worksheet(worksheet)
     worksheet_updates.append_row(data)
     print(f"{worksheet} worksheet updated successfully\n")
-
-
-def input_sales_data():
-    """
-    Get sales datas input for the poultry
-    """
-
-    
-    while True:
-        print("Please enter sales data for the day.")
-        print("Data should be four numbers, separated by commas.")
-        print("Example: 05,35,45,25\n")
-        #convert the strings of data from the user into a list of value
-        data_str = input("Enter your data here: ")
-
-        """
-        to remove commas from the strings
-        """
-        sales_data = data_str.split(",")
-        if validate_data(sales_data):
-            print(sales_data)
-            break
-
-    return sales
-
 
 
 def calculate_extras_data(sales_row):
