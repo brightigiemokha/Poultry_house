@@ -76,14 +76,14 @@ def calculate_extras_data(sales_row):
     print("Calculating Extras data...\n")
     # to get all balance stock values
     balance = SHEET.worksheet("balance").get_all_values()
-    balance_row = stock[-1]
+    balance_row = balance[-1]
     
     extras_data = []
-    for stock, sales in zip(balance_row, sales_row):
-        extras = int(balance) - sales
+    for balance, sales in zip(balance_row, sales_row):
+        extras = int(balance) - int(sales)
         extras_data.append(extras)
     
-    return surplus_data
+    return extras_data
 
 
 def get_last_5_entries_sales():
@@ -99,20 +99,20 @@ def get_last_5_entries_sales():
 
     return columns
 
-def calculate_stock_data(data):
+def calculate_balance_data(data):
     """
     calculate the average stock for each item type, adding 10%
     """
-    print("Calculate stock data...\n")
-    new_stock_data = []
+    print("Calculate balance data...\n")
+    new_balance_data = []
 
     for column in data:
         int_column = [int(num) for num in column]
         average = sum(int_column) / len(int_column)
-        stock_num = average * 1.1
-        new_stock_data.append(stock_num)
+        balance_num = average * 1.1
+        new_balance_data.append(balance_num)
     
-    return new_stock_data
+    return new_balance_data
 
 
 def main():
@@ -123,10 +123,10 @@ def main():
     sales_data = [int(num) for num in data]
     update_worksheet(sales_data, "sales")
     new_extras_data = calculate_extras_data(sales_data)
-    update_worksheet(new_extra_data, "extras")
+    update_worksheet(new_extras_data, "extras")
     sales_columns = get_last_5_entries_sales()
-    stock_data = calculate_stock_data(sales_columns)
-    update_worksheet(stock_data, "stock")
+    balance_data = calculate_balance_data(sales_columns)
+    update_worksheet(balance_data, "balance")
 
 
 print("Welcome to Poultry House Date Automation")
