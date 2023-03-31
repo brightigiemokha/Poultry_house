@@ -73,8 +73,8 @@ def calculate_extras_data(sales_row):
     for stock, sales in zip(balance_row, sales_row):
         extras = int(balance) - sales
         extras_data.append(extras)
-    print(extras_data)
-
+    
+    return surplus_data
 
 def main():
     # Run all program functions
