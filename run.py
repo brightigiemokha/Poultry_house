@@ -16,6 +16,7 @@ def get_sales_data():
     """
     Get sales datas input for the poultry
     """
+
 while True:
     print("Please enter sales data for the day.")
     print("Data should be four numbers, separated by commas.")
@@ -28,8 +29,10 @@ while True:
         print('valid Data')
         break
 
+
 def validate_data(values):
-    # to raise valueError and conver all strings into integers if there aren't 5 values
+    # to raise valueError and conver all strings
+    #  into integers if there aren't 5 values
     try:
         [int(value) for value in values]
         if len(values) != 4:
@@ -43,4 +46,14 @@ def validate_data(values):
         
     return True
 
+def update_sales_worksheet(data):
+    """
+    update sales worksheet, add new row with the list data provided.
+    """
+    print("updating sales worksheet...\n")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+
 data = get_sales_data()
+sales_data = [int(num) for num in data]
+update_sales_worksheet(sales_data)
