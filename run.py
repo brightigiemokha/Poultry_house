@@ -24,10 +24,13 @@ while True:
     print("Example: 05,35,45,25\n")
     #convert the strings of data from the user into a list of value
     data_str = input("Enter your data here: ")
-    # to remove commas from the strings
+
+    """
+     to remove commas from the strings
+     """
     sales_data = data_str.split(",")
     if validate_data(sales_data):
-        print('valid Data')
+        print('validate_data')
         break
 
 
@@ -64,15 +67,21 @@ def calculate_extras_data(sales_row):
     print("Calculating Extras data...\n")
     # to get all balance stock values
     balance = SHEET.worksheet("balance").get_all_values()
-    pprint(balance)
+    balance_row = stock[-1]
+    
+    extras_data = []
+    for stock, sales in zip(balance_row, sales_row):
+        extras = int(balance) - sales
+        extras_data.append(extras)
+    print(extras_data)
 
 
-def man():
+def main():
     # Run all program functions
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
-    calculate_extras_data(sales_data)
+    new_balance_data = calculate_extras_data(sales_data)
 
 
 print("Welcome to Poultry House Date Automation")
