@@ -50,15 +50,16 @@ def validate_data(values):
         
     return True
 
-def update_sales_worksheet(data):
-    """
-    update sales worksheet, add new row with the list data provided.
-    """
-    print("Updating sales worksheet...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales worksheet updated.\n")
 
+def update_worksheet(data, worksheet):
+    """ 
+    receiving a list of int to be insterted into a worksheet
+    to update the relevant worksheet with the data provided
+    """
+    print(f"Updating {worksheet} worksheet...\n")
+    worksheet_updates = SHEET.worksheet(worksheet)
+    worksheet_updates.append_row(data)
+    print(f"{worksheet} worksheet updated successfully\n")
 
 def calculate_extras_data(sales_row):
     """
@@ -76,12 +77,14 @@ def calculate_extras_data(sales_row):
     
     return surplus_data
 
+
 def main():
     # Run all program functions
     data = get_sales_data()
     sales_data = [int(num) for num in data]
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_balance_data = calculate_extras_data(sales_data)
+    update_worksheet(new_extra_data, "extras")
 
 
 print("Welcome to Poultry House Date Automation")
